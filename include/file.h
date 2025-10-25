@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-int create_database_file(const char *filename);
-int open_database_file(const char *filename);
+int create_db_file(const char *filename);
+int open_db_file(const char *filename);
 
 #endif
