@@ -16,7 +16,7 @@ int create_db_header(struct dbheader_t **headerOut) {
     }
     header->version = 0x1;
     header->count = 0;
-    header->magic = DB_MAGIC;
+    header->magic = HEADER_MAGIC;
     header->filesize = sizeof(struct dbheader_t);
 
     *headerOut = header;
@@ -55,7 +55,7 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
         return STATUS_ERROR;
     }
 
-    if (header->magic != DB_MAGIC) {
+    if (header->magic != HEADER_MAGIC) {
         printf("Invalid database magic\n");
         free(header);
         return STATUS_ERROR;
@@ -78,12 +78,12 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
     return STATUS_OK;
 }
 
-void output_file(int fd, struct dbheader_t *dbhdr) {
+int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees) {
     printf("Outputting file\n");
 
     if (fd < 0) {
         printf("Invalid file descriptor\n");
-        return;
+        return STATUS_ERROR;
     }
 
     dbhdr->magic = htonl(dbhdr->magic);
@@ -95,8 +95,10 @@ void output_file(int fd, struct dbheader_t *dbhdr) {
 
     if (write(fd, dbhdr, sizeof(struct dbheader_t)) == STATUS_ERROR) {
         perror("write");
-        return;
+        return STATUS_ERROR;
     }
+
+    return STATUS_OK;
 }
 
 // int read_employees(int fd, struct dbheader_t *, struct employee_t **employeesOut) {

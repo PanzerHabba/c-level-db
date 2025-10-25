@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
             return -1;
         }
         printf("Database header created\n");
-        output_file(dbfd, dbhdr_t);
+        // output_file(dbfd, dbhdr_t, employees);
     } else {
         int dbfd = open_database_file(filepath);
         if (dbfd == STATUS_ERROR) {
