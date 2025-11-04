@@ -98,5 +98,8 @@ int main(int argc, char *argv[]) {
     printf("Failed to output file\n");
   }
 
+  free(dbhdr);
+  free(employees);
+
   return 0;
 }
