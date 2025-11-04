@@ -36,14 +36,13 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
         free(header);
         return STATUS_ERROR;
     }
-    printf("allocated memory for header\n");
     
     if (read(fd, header, sizeof(struct dbheader_t)) == STATUS_ERROR) {
         perror("read");
         free(header);
         return STATUS_ERROR;
     }
-    printf("Header read from db file\n");
+    
     
     header->version = ntohs(header->version);
     header->count = ntohs(header->count);
@@ -80,7 +79,7 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
 }
 
 int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees) {
-    printf("Outputting file\n");
+    
 
     if (fd < 0) {
         printf("Invalid file descriptor\n");
@@ -173,4 +172,13 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees, char *
     *employees = local_employees;
 
     return STATUS_OK;
+}
+
+void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
+    for (int i = 0; i<dbhdr->count; i++) {
+        printf("Employee %d\n", i);
+        printf("\tName: %s\n", employees[i].name);
+        printf("\tAddress: %s\n", employees[i].address);
+        printf("\tHours: %d\n", employees[i].hours);
+    }
 }
