@@ -157,7 +157,7 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees, char *
     if (hours == NULL) return STATUS_ERROR;
 
     struct employee_t *local_employees = *employees;
-    local_employees = realloc(local_employees, sizeof(struct employee_t)*dbhdr->count+1);
+    local_employees = realloc(local_employees, sizeof(struct employee_t)*(dbhdr->count+1));
     if (local_employees == NULL) {
         printf("Could not reallocate employees\n");
         return STATUS_ERROR;
