@@ -11,6 +11,7 @@ void print_usage() {
   printf("Options:\n");
   printf("  -n      Create a new database file\n");
   printf("  -f      File path to the database file\n");
+  printf("  -a      Add via CSV list of (name,address,hours)\n");
   printf("example: final -n -f database.db\n");
 }
 
@@ -86,9 +87,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (add_string) {
-    dbhdr->count++;
-    employees = realloc(employees, dbhdr->count*(sizeof(struct employee_t)));
-    add_employee(dbhdr, employees, add_string);
+    add_employee(dbhdr, &employees, add_string);
   }
 
   if (output_file(dbfd, dbhdr, employees) == STATUS_ERROR) {

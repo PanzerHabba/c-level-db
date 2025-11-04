@@ -141,16 +141,36 @@ int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employe
     return STATUS_OK;
 }
 
-int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *add_string) {
-    printf("%s\n", add_string);
+int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees, char *add_string) {
+    
+    if (dbhdr == NULL) return STATUS_ERROR;
+    if (employees == NULL) return STATUS_ERROR;
+    if (*employees == NULL) return STATUS_ERROR;
+    if (add_string == NULL) return STATUS_ERROR;
 
     char *name = strtok(add_string, ",");
-    char *addr = strtok(NULL, ",");
-    char *hours = strtok(NULL, ",");
+    if (name == NULL) return STATUS_ERROR;
 
-    printf("%s %s %s\n", name, addr, hours);
-    strncpy(employees[dbhdr->count-1].name, name, sizeof(employees[dbhdr->count-1].name));
-    strncpy(employees[dbhdr->count-1].address, addr, sizeof(employees[dbhdr->count-1].address));
-    employees[dbhdr->count-1].hours = atoi(hours);
+    char *addr = strtok(NULL, ",");
+    if (addr == NULL) return STATUS_ERROR;
+
+    char *hours = strtok(NULL, ",");
+    if (hours == NULL) return STATUS_ERROR;
+
+    struct employee_t *local_employees = *employees;
+    local_employees = realloc(local_employees, sizeof(struct employee_t)*dbhdr->count+1);
+    if (local_employees == NULL) {
+        printf("Could not reallocate employees\n");
+        return STATUS_ERROR;
+    }
+
+    dbhdr->count++;
+    
+    strncpy(local_employees[dbhdr->count-1].name, name, sizeof(local_employees[dbhdr->count-1].name)-1);
+    strncpy(local_employees[dbhdr->count-1].address, addr, sizeof(local_employees[dbhdr->count-1].address)-1);
+    local_employees[dbhdr->count-1].hours = atoi(hours);
+
+    *employees = local_employees;
+
     return STATUS_OK;
 }
