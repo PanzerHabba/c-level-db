@@ -4,6 +4,7 @@ OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 run: clean default
 	./bin/final -f ./cleveldb.db -n
+	./bin/final -f ./cleveldb.db -a "John Doe,Kyrkjeveien 34, 100"
 	
 default: $(TARGET)
 

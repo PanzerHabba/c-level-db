@@ -1,0 +1,41 @@
+[
+  {
+    "arguments": [
+      "/usr/sbin/gcc",
+      "-c",
+      "-Iinclude",
+      "-o",
+      "obj/file.o",
+      "src/file.c"
+    ],
+    "directory": "/home/c-level-db",
+    "file": "/home/c-level-db/src/file.c",
+    "output": "/home/c-level-db/obj/file.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/gcc",
+      "-c",
+      "-Iinclude",
+      "-o",
+      "obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/c-level-db",
+    "file": "/home/c-level-db/src/main.c",
+    "output": "/home/c-level-db/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/gcc",
+      "-c",
+      "-Iinclude",
+      "-o",
+      "obj/parse.o",
+      "src/parse.c"
+    ],
+    "directory": "/home/c-level-db",
+    "file": "/home/c-level-db/src/parse.c",
+    "output": "/home/c-level-db/obj/parse.o"
+  }
+]
